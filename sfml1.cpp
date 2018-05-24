@@ -10,9 +10,16 @@ int main()
 	window.setVerticalSyncEnabled(true);
 	window.setFramerateLimit(60);
 	
+	sf::Texture Background;
+	Background.loadFromFile("spacebackground.jpeg");
+	Background.setSmooth(true);
+	sf::Sprite bgImage;
+	bgImage.setTexture(Background,true);
+	window.draw(bgImage);
+	
 	sf::Texture UFO;
-    UFO.loadFromFile("ufo.png");
-    if (!UFO.loadFromFile("ufo.png"))
+    UFO.loadFromFile("spaceship.png");
+    if (!UFO.loadFromFile("spaceship.png"))
 	{
 		cout<<"WTF?"<<endl;
 	}
@@ -21,7 +28,8 @@ int main()
 	UFOdrew.setTexture(UFO,true);
 	window.draw(UFOdrew);
 	UFOdrew.setColor(sf::Color(255, 255, 255));
-	//UFOdrew.setOrigin(sf::Vector2f(25, 25));
+	UFOdrew.setOrigin(130,167);
+	
 	while (window.isOpen())
 	{
 		sf::Event windowopen;
@@ -32,25 +40,36 @@ int main()
         }
         window.clear(sf::Color::White);
         window.draw(UFOdrew);
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 		{
 			UFOdrew.move(-5, 0);
 		}
 	
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 		{
 			UFOdrew.move(5, 0);
 		}
 		
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 		{
 			UFOdrew.move(0, 5);
 		}
 	
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 		{
 			UFOdrew.move(0, -5);
 		}
+		
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+		{
+			UFOdrew.rotate(10);
+		}
+		
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
+		{
+			UFOdrew.rotate(-10);
+		}
+		
 		window.display();
 	}
     
