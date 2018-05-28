@@ -6,32 +6,36 @@ using namespace std;
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(800, 600), "UFO");
-
+	
 	window.setVerticalSyncEnabled(true);
 	window.setFramerateLimit(60);
 	
 	sf::Texture Background;
 	Background.loadFromFile("spacebackground.jpeg");
+	if (!Background.loadFromFile("spacebackground.jpeg"))
+	{
+		cout<<"background_LOAD_FAILED"<<endl;
+	}
 	Background.setSmooth(true);
 	sf::Sprite bgImage;
 	bgImage.setTexture(Background,true);
-	window.draw(bgImage);
 	
 	sf::Texture UFO;
-    UFO.loadFromFile("spaceship.png");
-    if (!UFO.loadFromFile("spaceship.png"))
+    UFO.loadFromFile("ship.png");
+    if (!UFO.loadFromFile("ship.png"))
 	{
-		cout<<"WTF?"<<endl;
+		cout<<"SHIP_LOAD_FAIL"<<endl;
 	}
 	UFO.setSmooth(true);
 	sf::Sprite UFOdrew;
 	UFOdrew.setTexture(UFO,true);
 	window.draw(UFOdrew);
-	UFOdrew.setColor(sf::Color(255, 255, 255));
-	UFOdrew.setOrigin(130,167);
+	UFOdrew.setOrigin(100,100);
+	UFOdrew.scale(0.25f, 0.25f);
 	
 	while (window.isOpen())
 	{
+		window.draw(bgImage);
 		sf::Event windowopen;
 		while (window.pollEvent(windowopen))
 		{
@@ -60,15 +64,26 @@ int main()
 			UFOdrew.move(0, -5);
 		}
 		
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		{
-			UFOdrew.rotate(10);
+			UFOdrew.rotate(5);
 		}
 		
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		{
-			UFOdrew.rotate(-10);
+			UFOdrew.rotate(-5);
 		}
+		
+		//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		//{
+			
+		//}
+		
+		//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		//{
+			
+		//}
+		
 		
 		window.display();
 	}
