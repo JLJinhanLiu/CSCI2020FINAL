@@ -35,15 +35,18 @@ int main()
 	
 	while (window.isOpen())
 	{
-		window.draw(bgImage);
+		
 		sf::Event windowopen;
 		while (window.pollEvent(windowopen))
 		{
 			if (windowopen.type == sf::Event::Closed)
                 window.close();
         }
+        
         window.clear(sf::Color::White);
+        window.draw(bgImage);
         window.draw(UFOdrew);
+        
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 		{
 			UFOdrew.move(-5, 0);
@@ -74,7 +77,7 @@ int main()
 			UFOdrew.rotate(-5);
 		}
 		
-		//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 		//{
 			
 		//}
