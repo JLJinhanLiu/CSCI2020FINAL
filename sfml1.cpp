@@ -1,6 +1,7 @@
 #include <SFML/Window.hpp>
 #include <iostream>
 #include <SFML/Graphics.hpp>
+
 using namespace std;
 
 int main()
@@ -32,7 +33,7 @@ int main()
 	window.draw(UFOdrew);
 	UFOdrew.setOrigin(100,100);
 	UFOdrew.scale(0.25f, 0.25f);
-	
+	UFOdrew.setPosition(15,275);
 	while (window.isOpen())
 	{
 		
@@ -46,7 +47,7 @@ int main()
         window.clear(sf::Color::White);
         window.draw(bgImage);
         window.draw(UFOdrew);
-        
+
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 		{
 			UFOdrew.move(-5, 0);
@@ -77,17 +78,17 @@ int main()
 			UFOdrew.rotate(-5);
 		}
 		
-		//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-		//{
-			
-		//}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
+		{
+			UFOdrew.setPosition(15,275);
+		}
 		
 		//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		//{
 			
 		//}
 		
-		
+	
 		window.display();
 	}
     
