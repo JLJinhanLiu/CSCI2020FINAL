@@ -5,27 +5,17 @@
 
 using namespace std;
 
-void Stardust()
-{
-	if (!music.openFromFile("Stardust.mp3"))
-    return -1;
-	BGM.play();
-}
 
-void Spaceflight()
-{
-	if (!music.openFromFile("Spaceflight.mp3"))
-    return -1;
-	BGM.play();
-}
+
 
 int main()
-{
+{	
+
 	//buildWINDOW
 	sf::RenderWindow window(sf::VideoMode(800, 600), "UFO");
-
 	window.setVerticalSyncEnabled(true);
 	window.setFramerateLimit(60);
+
 
 	//importBACKGROUND
 	sf::Texture Background;
@@ -45,7 +35,7 @@ int main()
 	window.draw(UFOdrew);
 	UFOdrew.setOrigin(500,500);
 	UFOdrew.scale(0.05f, 0.05f);
-	UFOdrew.setPosition(366,15);
+	UFOdrew.setPosition(400,585);
 
 	//importBullet
 	sf::Texture ammo;
@@ -55,20 +45,40 @@ int main()
 	sf::Sprite bullet;
 	bullet.setTexture(ammo,true);
 	window.draw(bullet);
-	UFOdrew.setOrigin(300,300);
-	UFOdrew.scale(0.015f, 0.015f);
-	UFOdrew.setPosition(UFOdrew.getposition());
+	bullet.setOrigin(300,300);
+	bullet.scale(0.015f, 0.015f);
+	bullet.setPosition(UFOdrew.getPosition());
 
+	
 	while (window.isOpen())
 	{
 		sf::Event windowopen;
 		while (window.pollEvent(windowopen))
 		{
-			if (windowopen.type == sf::Event::Closed)
-      	window.close();
+			switch (windowopen.type)
+    {
+			// window closed
+			case sf::Event::Closed:
+				window.close();
+				break;
+
+			// key pressed
+			case sf::Event::KeyReleased:
+				if (windowopen.key.code == sf::Keyboard::Space)
+				{
+					std::cout << "the Space key was released" << std::endl;
+					bullet.setPosition(UFOdrew.getPosition());
+					window.draw(bullet);
+					}
+				break;
+
+
+			default:
+				break;
+			}
     }
 
-		Spaceflight();
+		
 		
     window.clear(sf::Color::White);
     window.draw(bgImage);
@@ -77,15 +87,16 @@ int main()
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 			UFOdrew.move(-5, 0);
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 			UFOdrew.move(5, 0);
 
-		//FORDEBUGONLY
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
-			UFOdrew.setPosition(15,275);
-
-		window.display();
+	//FORDEBUGONLY
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
+		UFOdrew.setPosition(15,275);
+		
+	window.display();
 	}
 
     return 0;
+
 }
