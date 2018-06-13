@@ -52,6 +52,9 @@ int main()
 	
 	while (window.isOpen())
 	{
+	window.clear(sf::Color::White);
+    window.draw(bgImage);
+    window.draw(UFOdrew);
 		sf::Event windowopen;
 		while (window.pollEvent(windowopen))
 		{
@@ -66,8 +69,7 @@ int main()
 			case sf::Event::KeyReleased:
 				if (windowopen.key.code == sf::Keyboard::Space)
 				{
-					std::cout << "the Space key was released" << std::endl;
-					bullet.setPosition(UFOdrew.getPosition());
+					cout << "the Space key was released" << endl;
 					window.draw(bullet);
 					}
 				break;
@@ -80,9 +82,7 @@ int main()
 
 		
 		
-    window.clear(sf::Color::White);
-    window.draw(bgImage);
-    window.draw(UFOdrew);
+
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 			UFOdrew.move(-5, 0);
