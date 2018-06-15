@@ -38,6 +38,81 @@ int main()
     sf::Sprite bgImage;
     bgImage.setTexture(Background,true);
     
+//importTitle
+    sf::Texture titleimage;
+    if (!titleimage.loadFromFile("title.png"))
+        cout<<"title_LOAD_FAILED"<<endl;
+    titleimage.setSmooth(true);
+    sf::Sprite title;
+    title.setTexture(titleimage,true);
+    title.setOrigin(224,67);
+    title.scale(0.8f, 0.8f);
+    title.setPosition(400,100);
+    
+//importStart
+    sf::Texture startimage;
+    if (!startimage.loadFromFile("start.png"))
+        cout<<"startimage_LOAD_FAILED"<<endl;
+    startimage.setSmooth(true);
+    sf::Sprite start;
+    start.setTexture(startimage,true);
+    start.setOrigin(118,45);
+    start.scale(0.8f, 0.8f);
+    //start.setPosition(366,550);
+    
+//importDifficulty
+    sf::Texture diffimage;
+    if (!diffimage.loadFromFile("diffic.png"))
+        cout<<"diffimage_LOAD_FAILED"<<endl;
+    diffimage.setSmooth(true);
+    sf::Sprite diffic;
+    diffic.setTexture(diffimage,true); 
+    diffic.setOrigin(230,45);
+    diffic.scale(0.8f, 0.8f);
+    //diffic.setPosition(366,550); 
+    
+//importExit
+    sf::Texture exitimage;
+    if (!exitimage.loadFromFile("exit.png"))
+        cout<<"exitimage_LOAD_FAILED"<<endl;
+    exitimage.setSmooth(true);
+    sf::Sprite exit;
+    exit.setTexture(exitimage,true);  
+    exit.setOrigin(92,46);
+    //exit.setPosition(366,550);
+    
+//importHeart
+    sf::Texture heartimage;
+    if (!heartimage.loadFromFile("heart.png"))
+        cout<<"heartimage_LOAD_FAILED"<<endl;
+    heartimage.setSmooth(true);
+    sf::Sprite heart;
+    heart.setTexture(heartimage,true);
+    heart.setOrigin(88,77);
+    //heart.setPosition(366,550);
+    
+//importGAMEOVER
+    sf::Texture overimage;
+    if (!overimage.loadFromFile("gameo.png"))
+        cout<<"overimage_LOAD_FAILED"<<endl;
+    overimage.setSmooth(true);
+    sf::Sprite gameo;
+    gameo.setTexture(overimage,true);
+    gameo.setOrigin(1769,334);
+    gameo.scale(0.15f, 0.15f);
+    gameo.setPosition(400,120);
+    
+//importEXPLOSION
+    sf::Texture explo;
+    if (!explo.loadFromFile("exp.png"))
+        cout<<"exp_LOAD_FAILED"<<endl;
+    explo.setSmooth(true);
+    sf::Sprite exp;
+    exp.setTexture(explo,true);
+    exp.setOrigin(387,360);
+    exp.scale(0.8f, 0.8f);
+    //exp.setPosition(366,550);
+    
 //importSHIP
     sf::Texture UFO;
     if (!UFO.loadFromFile("ship.png"))
@@ -46,8 +121,8 @@ int main()
     sf::Sprite ship;
     ship.setTexture(UFO,true);
     window.draw(ship);
-    ship.setOrigin(500,500);
-    ship.scale(0.05f, 0.05f);
+    ship.setOrigin(496,236);
+    ship.scale(0.08f, 0.08f);
     ship.setPosition(366,550);
     
 //importBullet
@@ -81,23 +156,23 @@ int main()
     com4.setSmooth(true);
     sf::Sprite comet1;
     comet1.setTexture(com1,true);
-    comet1.setOrigin(512,382);
+    comet1.setOrigin(303,272);
     comet1.scale(0.08f, 0.08f);
     comet1.setPosition(rand() % 600+50,-100);
     sf::Sprite comet2;
     comet2.setTexture(com2,true);
-    comet2.setOrigin(310,174);
+    comet2.setOrigin(221,206);
     comet2.scale(0.15f, 0.15f);
     comet2.setPosition(rand() % 600+50,-100);
     sf::Sprite comet3;
     comet3.setTexture(com3,true);
-    comet3.setOrigin(1051,1039);
-    comet3.scale(0.03f, 0.03f);
+    comet3.setOrigin(773,937);
+    comet3.scale(0.04f, 0.04f);
     comet3.setPosition(rand() % 600+50,-100);
     sf::Sprite comet4;
     comet4.setTexture(com4,true);
-    comet4.setOrigin(331,249);
-    comet4.scale(0.15f, 0.15f);
+    comet4.setOrigin(95,95);
+    comet4.scale(0.5f, 0.5f);
     comet4.setPosition(rand() % 600+50,-100);
     
 //playBGM
@@ -113,10 +188,10 @@ int main()
     int com2y(0);
     int com3y(0);
     int com4y(0);
-    int com1spd(rand() % 7 + 1);
-    int com2spd(rand() % 7 + 1);
-    int com3spd(rand() % 7 + 1);
-    int com4spd(rand() % 7 + 1);
+    int com1spd(rand() % 6 + 1);
+    int com2spd(rand() % 6 + 1);
+    int com3spd(rand() % 6 + 1);
+    int com4spd(rand() % 6 + 1);
     
 //RUNTIME
     while (window.isOpen())
@@ -163,7 +238,7 @@ int main()
         {
             com1y=0;
             comet1.setPosition(rand() % 600+50,-100);
-            com1spd=(rand() % 7 + 1);  
+            com1spd=(rand() % 6 + 1);  
         }
         else
         {
@@ -176,7 +251,7 @@ int main()
         {
             com2y=0;
             comet2.setPosition(rand() % 600+50,-100);
-            com2spd=(rand() % 7 + 1);
+            com2spd=(rand() % 6 + 1);
         }
         else
         {
@@ -189,7 +264,7 @@ int main()
         {
             com3y=0;
             comet3.setPosition(rand() % 600+50,-100);
-            com3spd=(rand() % 7 + 1);
+            com3spd=(rand() % 6 + 1);
         }
         else
         {
@@ -202,7 +277,7 @@ int main()
         {
             com4y=0;
             comet4.setPosition(rand() % 600+50,-100);
-            com4spd=(rand() % 7 + 1);
+            com4spd=(rand() % 6 + 1);
         }
         else
         {
@@ -225,7 +300,7 @@ int main()
         {
             com1y=0;
             comet1.setPosition(rand() % 600+50,-100);
-            com1spd=(rand() % 7 + 1);;
+            com1spd=(rand() % 6 + 1);;
             bullety=0;
             bullet.setPosition(ship.getPosition());
         }
@@ -234,7 +309,7 @@ int main()
         {
             com2y=0;
             comet2.setPosition(rand() % 600+50,-100);
-            com2spd=(rand() % 7 + 1);
+            com2spd=(rand() % 6 + 1);
             bullety=0;
             bullet.setPosition(ship.getPosition());
         }
@@ -243,7 +318,7 @@ int main()
         {
             com3y=0;
             comet3.setPosition(rand() % 600+50,-100);
-            com3spd=(rand() % 7 + 1);
+            com3spd=(rand() % 6 + 1);
             bullety=0;
             bullet.setPosition(ship.getPosition());
         }
@@ -252,14 +327,14 @@ int main()
         {
             com4y=0;
             comet4.setPosition(rand() % 600+50,-100);
-            com4spd=(rand() % 7 + 1);
+            com4spd=(rand() % 6 + 1);
             bullety=0;
             bullet.setPosition(ship.getPosition());
         }
         
         if (com1box.intersects(shipbox) || com2box.intersects(shipbox) || com3box.intersects(shipbox) || com4box.intersects(shipbox))
         {
-            window.close();
+            window.draw(gameo);
             cout<<"GAME OVER"<<endl;
         }
         
