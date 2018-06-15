@@ -24,13 +24,13 @@ void Spaceflight()
 
 int main()
 {
-    //buildWINDOW
+//buildWINDOW
     sf::RenderWindow window(sf::VideoMode(800, 600), "UFO");
     
     window.setVerticalSyncEnabled(true);
     window.setFramerateLimit(60);
     
-    //importBACKGROUND
+//importBACKGROUND
     sf::Texture Background;
     if (!Background.loadFromFile("spacebackground.jpeg"))
         cout<<"background_LOAD_FAILED"<<endl;
@@ -38,7 +38,7 @@ int main()
     sf::Sprite bgImage;
     bgImage.setTexture(Background,true);
     
-    //importSHIP
+//importSHIP
     sf::Texture UFO;
     if (!UFO.loadFromFile("ship.png"))
         cout<<"SHIP_LOAD_FAIL"<<endl;
@@ -50,7 +50,7 @@ int main()
     ship.scale(0.05f, 0.05f);
     ship.setPosition(366,550);
     
-    //importBullet
+//importBullet
     sf::Texture ammo;
     if (!ammo.loadFromFile("bullet.png"))
         cout<<"bullet_LOAD_FAIL"<<endl;
@@ -62,7 +62,7 @@ int main()
     bullet.scale(0.015f, 0.015f);
     bullet.setPosition(ship.getPosition());
     
-    //importComet
+//importComet
     sf::Texture com1;
     if (!com1.loadFromFile("ast1.png"))
         cout<<"comet1_LOAD_FAIL"<<endl;
@@ -100,15 +100,7 @@ int main()
     comet4.scale(0.15f, 0.15f);
     comet4.setPosition(rand() % 600+50,-100);
     
-    //    setCollision
-    sf::FloatRect com1box = comet1.getGlobalBounds();
-    sf::FloatRect com2box = comet2.getGlobalBounds();
-    sf::FloatRect com3box = comet3.getGlobalBounds();
-    sf::FloatRect com4box = comet4.getGlobalBounds();
-    sf::FloatRect bulletbox = bullet.getGlobalBounds();
-    sf::FloatRect shipbox = ship.getGlobalBounds();
-    
-    //playBGM
+//playBGM
     sf::Music BGM;
     if (!BGM.openFromFile("Stardust.ogg"))
         cout<<"bgm_LOAD_FAILED"<<endl;
@@ -126,7 +118,7 @@ int main()
     int com3spd(rand() % 7 + 1);
     int com4spd(rand() % 7 + 1);
     
-    //RUNTIME
+//RUNTIME
     while (window.isOpen())
     {
         sf::Event windowopen;
@@ -139,6 +131,19 @@ int main()
         window.clear(sf::Color::White);
         window.draw(bgImage);
         window.draw(ship);
+        window.draw(comet1);
+        window.draw(comet2);
+        window.draw(comet3);
+        window.draw(comet4);
+        window.draw(bullet);
+//setCollision
+		sf::FloatRect com1box = comet1.getGlobalBounds();
+		sf::FloatRect com2box = comet2.getGlobalBounds();
+		sf::FloatRect com3box = comet3.getGlobalBounds();
+		sf::FloatRect com4box = comet4.getGlobalBounds();
+		sf::FloatRect bulletbox = bullet.getGlobalBounds();
+		sf::FloatRect shipbox = ship.getGlobalBounds();
+        
         
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
             ship.move(-10, 0);
@@ -146,124 +151,118 @@ int main()
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
             ship.move(10, 0);
         
-        //FORDEBUGONLY
+//FORDEBUGONLY
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
         {
             ship.setPosition(366,550);
             //fire.play();
         }
         
-        //comet1
+//comet1
         if (com1y>700)
         {
             com1y=0;
             comet1.setPosition(rand() % 600+50,-100);
-            com1spd=(rand() % 7 + 1);
-            window.draw(comet1);
+            com1spd=(rand() % 7 + 1);  
         }
         else
         {
             com1y+=com1spd;
             comet1.move(0,com1spd);
-            window.draw(comet1);
         }
         
-        //comet2
+//comet2
         if (com2y>700)
         {
             com2y=0;
             comet2.setPosition(rand() % 600+50,-100);
             com2spd=(rand() % 7 + 1);
-            window.draw(comet2);
         }
         else
         {
             com2y+=com2spd;
             comet2.move(0,com2spd);
-            window.draw(comet2);
         }
         
-        //comet3
+//comet3
         if (com3y>700)
         {
             com3y=0;
             comet3.setPosition(rand() % 600+50,-100);
             com3spd=(rand() % 7 + 1);
-            window.draw(comet3);
         }
         else
         {
             com3y+=com3spd;
             comet3.move(0,com3spd);
-            window.draw(comet3);
         }
         
-        //comet4
+//comet4
         if (com4y>700)
         {
             com4y=0;
             comet4.setPosition(rand() % 600+50,-100);
             com4spd=(rand() % 7 + 1);
-            window.draw(comet4);
         }
         else
         {
             com4y+=com4spd;
             comet4.move(0,com4spd);
-            window.draw(comet4);
         }
-        //Fire
+//Fire
         if (bullety>600)
         {
             bullety=0;
             bullet.setPosition(ship.getPosition());
-            window.draw(bullet);
         }
         else{
             bullety+=30;
             bullet.move(0,-30);
-            window.draw(bullet);
         }
         
-        //checkCollision
+//checkCollision
         if (com1box.intersects(bulletbox))
         {
             com1y=0;
             comet1.setPosition(rand() % 600+50,-100);
-            com1spd=(rand() % 7 + 1);
-            window.draw(comet1);
+            com1spd=(rand() % 7 + 1);;
+            bullety=0;
+            bullet.setPosition(ship.getPosition());
         }
+        
         if (com2box.intersects(bulletbox))
         {
             com2y=0;
             comet2.setPosition(rand() % 600+50,-100);
             com2spd=(rand() % 7 + 1);
-            window.draw(comet2);
+            bullety=0;
+            bullet.setPosition(ship.getPosition());
         }
+        
         if (com3box.intersects(bulletbox))
         {
             com3y=0;
             comet3.setPosition(rand() % 600+50,-100);
             com3spd=(rand() % 7 + 1);
-            window.draw(comet3);
+            bullety=0;
+            bullet.setPosition(ship.getPosition());
         }
+        
         if (com4box.intersects(bulletbox))
         {
             com4y=0;
             comet4.setPosition(rand() % 600+50,-100);
             com4spd=(rand() % 7 + 1);
-            window.draw(comet4);
+            bullety=0;
+            bullet.setPosition(ship.getPosition());
         }
+        
         if (com1box.intersects(shipbox) || com2box.intersects(shipbox) || com3box.intersects(shipbox) || com4box.intersects(shipbox))
         {
             window.close();
+            cout<<"GAME OVER"<<endl;
         }
         
-        //gameoverCheck
-        if (ship.getPosition()==comet1.getPosition() || ship.getPosition()==comet2.getPosition() || ship.getPosition()==comet3.getPosition() || ship.getPosition()==comet4.getPosition())
-        {
-            window.close();
-        }
         
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
             window.close();
