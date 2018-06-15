@@ -1,4 +1,3 @@
-#include "ResourcePath.hpp"
 #include <SFML/Window.hpp>
 #include <iostream>
 #include <SFML/Graphics.hpp>
@@ -9,7 +8,7 @@ using namespace std;
 void Stardust()
 {
     sf::Music BGM;
-    if (!BGM.openFromFile(resourcePath() + "Stardust.ogg"))
+    if (!BGM.openFromFile("Stardust.ogg"))
         cout<<"bgm_LOAD_FAILED"<<endl;
     BGM.play();
     BGM.setLoop(true);
@@ -18,7 +17,7 @@ void Stardust()
 void Spaceflight()
 {
     sf::Music BGM;
-    if (!BGM.openFromFile(resourcePath() + "Spaceflight.ogg"))
+    if (!BGM.openFromFile("Spaceflight.ogg"))
         cout<<"bgm_LOAD_FAILED"<<endl;
     BGM.play();
 }
@@ -33,7 +32,7 @@ int main()
     
     //importBACKGROUND
     sf::Texture Background;
-    if (!Background.loadFromFile(resourcePath() + "spacebackground.jpeg"))
+    if (!Background.loadFromFile("spacebackground.jpeg"))
         cout<<"background_LOAD_FAILED"<<endl;
     Background.setSmooth(true);
     sf::Sprite bgImage;
@@ -41,7 +40,7 @@ int main()
     
     //importSHIP
     sf::Texture UFO;
-    if (!UFO.loadFromFile(resourcePath() + "ship.png"))
+    if (!UFO.loadFromFile("ship.png"))
         cout<<"SHIP_LOAD_FAIL"<<endl;
     UFO.setSmooth(true);
     sf::Sprite ship;
@@ -53,7 +52,7 @@ int main()
     
     //importBullet
     sf::Texture ammo;
-    if (!ammo.loadFromFile(resourcePath() + "bullet.png"))
+    if (!ammo.loadFromFile("bullet.png"))
         cout<<"bullet_LOAD_FAIL"<<endl;
     ammo.setSmooth(true);
     sf::Sprite bullet;
@@ -65,19 +64,19 @@ int main()
     
     //importComet
     sf::Texture com1;
-    if (!com1.loadFromFile(resourcePath() + "ast1.png"))
+    if (!com1.loadFromFile("ast1.png"))
         cout<<"comet1_LOAD_FAIL"<<endl;
     com1.setSmooth(true);
     sf::Texture com2;
-    if (!com2.loadFromFile(resourcePath() + "ast2.png"))
+    if (!com2.loadFromFile("ast2.png"))
         cout<<"comet2_LOAD_FAIL"<<endl;
     com2.setSmooth(true);
     sf::Texture com3;
-    if (!com3.loadFromFile(resourcePath() + "ast3.png"))
+    if (!com3.loadFromFile("ast3.png"))
         cout<<"comet3_LOAD_FAIL"<<endl;
     com3.setSmooth(true);
     sf::Texture com4;
-    if (!com4.loadFromFile(resourcePath() + "ast4.png"))
+    if (!com4.loadFromFile("ast4.png"))
         cout<<"comet4_LOAD_FAIL"<<endl;
     com4.setSmooth(true);
     sf::Sprite comet1;
@@ -111,7 +110,7 @@ int main()
     
     //playBGM
     sf::Music BGM;
-    if (!BGM.openFromFile(resourcePath() + "Stardust.ogg"))
+    if (!BGM.openFromFile("Stardust.ogg"))
         cout<<"bgm_LOAD_FAILED"<<endl;
     BGM.play();
     BGM.setLoop(true);
