@@ -42,6 +42,26 @@ int main()
     lives.setFillColor(sf::Color::Red);
     lives.setPosition(750, 0);
     
+    sf::Text highscore;
+    highscore.setFont(invasion);
+    highscore.setCharacterSize(30);
+    highscore.setFillColor(sf::Color::White);
+    highscore.setString("HIGH SCORE: ");
+    highscore.setPosition(8, 0);
+    
+    sf::Text hiscore;
+    hiscore.setFont(invasion);
+    hiscore.setCharacterSize(30);
+    hiscore.setFillColor(sf::Color::White);
+    hiscore.setPosition(6, 30);
+    
+    sf::Text Tutorial;
+    Tutorial.setFont(invasion);
+    Tutorial.setCharacterSize(30);
+    Tutorial.setFillColor(sf::Color::White);
+    Tutorial.setPosition(140, 450);
+    Tutorial.setString("Use A and D to move your ship");
+    
     //importBACKGROUND
     sf::Texture Background;
     if (!Background.loadFromFile(resourcePath() + "spacebackground.jpeg"))
@@ -141,6 +161,7 @@ int main()
     
     sf::Sound hitSound;
     hitSound.setBuffer(hitBuffer);
+    hitSound.setVolume(50);
     
     sf::SoundBuffer deadBuffer;
     if (!deadBuffer.loadFromFile(resourcePath() + "dead.ogg"))
@@ -148,6 +169,29 @@ int main()
     
     sf::Sound deathSound;
     deathSound.setBuffer(deadBuffer);
+    deathSound.setVolume(80);
+    
+    sf::SoundBuffer loselifeBuffer;
+    if (!loselifeBuffer.loadFromFile(resourcePath() + "loselife.ogg"))
+        cout<<"loselifesound_LOAD_FAILED"<<endl;
+    
+    sf::Sound loselifeSound;
+    loselifeSound.setBuffer(loselifeBuffer);
+    loselifeSound.setVolume(60);
+    
+    sf::SoundBuffer gameoverBuffer;
+    if (!gameoverBuffer.loadFromFile(resourcePath() + "gameover.ogg"))
+        cout<<"gameoversound_LOAD_FAILED"<<endl;
+    
+    sf::Sound gameoverSound;
+    gameoverSound.setBuffer(gameoverBuffer);
+    
+    sf::SoundBuffer selectBuffer;
+    if (!selectBuffer.loadFromFile(resourcePath() + "select.ogg"))
+        cout<<"selectsound_LOAD_FAILED"<<endl;
+    
+    sf::Sound selectSound;
+    selectSound.setBuffer(selectBuffer);
     
     //importExit
     sf::Texture exitimage;
@@ -246,10 +290,11 @@ int main()
     comet3.scale(0.03f, 0.03f);
     sf::Sprite comet4;
     comet4.setTexture(com4,true);
-    comet4.setOrigin(200,249);
+    comet4.setOrigin(150,249);
     comet4.scale(0.5f, 0.5f);
     
     //variableDefinition
+    int hscore(0);
     int life(5);
     int hearts;
     int xaxis(366);
@@ -272,6 +317,8 @@ int main()
     BGM.setLoop(true);
     BGM.setVolume(60);
     
+    //setBoolVar
+    bool tutorial(true);
     bool titlescreen(true);
     bool gamerunning(false);
     bool difficulty(false);
@@ -286,7 +333,7 @@ int main()
             if (windowopen.type == sf::Event::Closed)
                 window.close();
         }
-        
+        hiscore.setString(to_string(hscore));
         while (titlescreen)
         {
             sf::Event windowopen;
@@ -295,6 +342,7 @@ int main()
                 if (windowopen.type == sf::Event::Closed)
                     window.close();
             }
+            hiscore.setString(to_string(hscore));
             hearts=life;
             lives.setString(to_string(hearts));
             point=0;
@@ -316,25 +364,31 @@ int main()
             window.draw(diffic);
             window.draw(musicsel);
             window.draw(exit);
+            window.draw(highscore);
+            window.draw(hiscore);
             
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
             {
+                selectSound.play();
                 titlescreen=false;
                 gamerunning=true;
                 BGM.play();
             }
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
             {
+                selectSound.play();
                 titlescreen=false;
                 difficulty=true;
             }
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
             {
+                selectSound.play();
                 titlescreen=false;
                 musicselection=true;
             }
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
             {
+                selectSound.play();
                 titlescreen=false;
                 window.close();
             }
@@ -358,6 +412,7 @@ int main()
             window.draw(hard);
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
             {
+                selectSound.play();
                 diff=1;
                 titlescreen=true;
                 difficulty=false;
@@ -365,6 +420,7 @@ int main()
             }
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::M))
             {
+                selectSound.play();
                 diff=3;
                 titlescreen=true;
                 difficulty=false;
@@ -372,6 +428,7 @@ int main()
             }
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::H))
             {
+                selectSound.play();
                 diff=3;
                 titlescreen=true;
                 difficulty=false;
@@ -379,6 +436,7 @@ int main()
             }
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
             {
+                selectSound.play();
                 titlescreen=true;
                 difficulty=false;
             }
@@ -400,24 +458,28 @@ int main()
             window.draw(songs);
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
             {
+                selectSound.play();
                 BGM.openFromFile(resourcePath() + "Stardust.ogg");
                 titlescreen=true;
                 musicselection=false;
             }
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2))
             {
+                selectSound.play();
                 BGM.openFromFile(resourcePath() + "Spaceflight.ogg");
                 titlescreen=true;
                 musicselection=false;
             }
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3))
             {
+                selectSound.play();
                 BGM.openFromFile(resourcePath() + "Home.ogg");
                 titlescreen=true;
                 musicselection=false;
             }
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
             {
+                selectSound.play();
                 titlescreen=true;
                 musicselection=false;
             }
@@ -454,20 +516,42 @@ int main()
             sf::FloatRect bulletbox = bullet.getGlobalBounds();
             sf::FloatRect shipbox = ship.getGlobalBounds();
             
+            //Escape
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+            {
+                titlescreen=true;
+                gamerunning=false;
+                BGM.stop();
+            }
+            
             //shipControl
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+            {
+                tutorial=false;
                 if (xaxis>=28)
                 {
                     ship.move(-15, 0);
                     xaxis-=15;
                 }
+            }
             
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+            {
+                tutorial=false;
                 if (xaxis<=760)
                 {
                     ship.move(15, 0);
                     xaxis+=15;
                 }
+            }
+            //Tutorial?
+            if (tutorial)
+            {
+                window.draw(Tutorial);
+                window.display();
+                continue;
+            }
+            
             //comets
             //comet1
             if (com1y>800)
@@ -476,6 +560,7 @@ int main()
                 comet1.setPosition(rand() % 500+50,-100);
                 com1spd=(rand() % 6 + diff);
                 hearts-=1;
+                loselifeSound.play();
             }
             else
             {
@@ -490,6 +575,7 @@ int main()
                 comet2.setPosition(rand() % 500+50,-100);
                 com2spd=(rand() % 6 + diff);
                 hearts-=1;
+                loselifeSound.play();
             }
             else
             {
@@ -504,6 +590,7 @@ int main()
                 comet3.setPosition(rand() % 500+50,-100);
                 com3spd=(rand() % 6 + diff);
                 hearts-=1;
+                loselifeSound.play();
             }
             else
             {
@@ -518,6 +605,7 @@ int main()
                 comet4.setPosition(rand() % 500+50,-100);
                 com4spd=(rand() % 6 + diff);
                 hearts-=1;
+                loselifeSound.play();
             }
             else
             {
@@ -581,13 +669,6 @@ int main()
                 hitSound.play();
             }
             
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-            {
-                titlescreen=true;
-                gamerunning=false;
-                BGM.stop();
-            }
-            
             //GameOverConditions
             if (com1box.intersects(shipbox) || com2box.intersects(shipbox) || com3box.intersects(shipbox) || com4box.intersects(shipbox))
             {
@@ -597,6 +678,8 @@ int main()
                 window.display();
                 BGM.stop();
                 deathSound.play();
+                if (point>hscore)
+                    hscore=point;
                 while (true)
                 {
                     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
@@ -605,6 +688,7 @@ int main()
                 titlescreen=true;
                 gamerunning=false;
             }
+            
             if (hearts==0)
             {
                 lives.setString(to_string(hearts));
@@ -612,7 +696,9 @@ int main()
                 window.draw(gameo);
                 window.display();
                 BGM.stop();
-                deathSound.play();
+                gameoverSound.play();
+                if (point>hscore)
+                    hscore=point;
                 while (true)
                 {
                     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
