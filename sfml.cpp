@@ -6,25 +6,9 @@
 
 using namespace std;
 
-//void Stardust()
-//{
-//    sf::Music BGM;
-//    if (!BGM.openFromFile(resourcePath() + "Stardust.ogg"))
-//        cout<<"bgm_LOAD_FAILED"<<endl;
-//    BGM.play();
-//    BGM.setLoop(true);
-//}
-//
-//void Spaceflight()
-//{
-//    sf::Music BGM;
-//    if (!BGM.openFromFile(resourcePath() + "Spaceflight.ogg"))
-//        cout<<"bgm_LOAD_FAILED"<<endl;
-//    BGM.play();
-//}
-
 int main()
 {
+    
     //buildWINDOW
     sf::RenderWindow window(sf::VideoMode(800, 600), "UFO");
     
@@ -32,6 +16,32 @@ int main()
     window.setFramerateLimit(60);
     
     //importUIElements
+    
+    //importFont
+    sf::Font invasion;
+    if (!invasion.loadFromFile(resourcePath() + "invasion.ttf"))
+        cout<<"font_LOAD_FAILED"<<endl;
+    
+    //buildString
+    sf::Text score;
+    score.setFont(invasion);
+    score.setCharacterSize(30);
+    score.setFillColor(sf::Color::White);
+    score.setString("Score: ");
+    score.setPosition(5, 0);
+    
+    sf::Text points;
+    points.setFont(invasion);
+    points.setCharacterSize(30);
+    points.setPosition(5, 30);
+    points.setFillColor(sf::Color::White);
+    
+    sf::Text lives;
+    lives.setFont(invasion);
+    lives.setCharacterSize(30);
+    lives.setFillColor(sf::Color::Red);
+    lives.setPosition(750, 0);
+    
     //importBACKGROUND
     sf::Texture Background;
     if (!Background.loadFromFile(resourcePath() + "spacebackground.jpeg"))
@@ -124,6 +134,20 @@ int main()
     songs.scale(0.6f, 0.6f);
     songs.setPosition(400,520);
     
+    //importSoundEffects
+    sf::SoundBuffer hitBuffer;
+    if (!hitBuffer.loadFromFile(resourcePath() + "hit.ogg"))
+        cout<<"hitsound_LOAD_FAILED"<<endl;
+    
+    sf::Sound hitSound;
+    hitSound.setBuffer(hitBuffer);
+    
+    sf::SoundBuffer deadBuffer;
+    if (!deadBuffer.loadFromFile(resourcePath() + "dead.ogg"))
+        cout<<"deathsound_LOAD_FAILED"<<endl;
+    
+    sf::Sound deathSound;
+    deathSound.setBuffer(deadBuffer);
     
     //importExit
     sf::Texture exitimage;
@@ -144,7 +168,8 @@ int main()
     sf::Sprite heart;
     heart.setTexture(heartimage,true);
     heart.setOrigin(88,77);
-    //heart.setPosition(366,550);
+    heart.setPosition(730,20);
+    heart.scale(0.15f, 0.15f);
     
     //importGAMEOVER
     sf::Texture overimage;
@@ -221,16 +246,20 @@ int main()
     comet3.scale(0.03f, 0.03f);
     sf::Sprite comet4;
     comet4.setTexture(com4,true);
-    comet4.setOrigin(331,249);
+    comet4.setOrigin(200,249);
     comet4.scale(0.5f, 0.5f);
     
     //variableDefinition
+    int life(5);
+    int hearts;
+    int xaxis(366);
     int diff(1);
+    int point(0);
     int bullety(0);
-    int com1y(0);
-    int com2y(0);
-    int com3y(0);
-    int com4y(0);
+    unsigned int com1y(0);
+    unsigned int com2y(0);
+    unsigned int com3y(0);
+    unsigned int com4y(0);
     int com1spd(rand() % 6 + diff);
     int com2spd(rand() % 6 + diff);
     int com3spd(rand() % 6 + diff);
@@ -266,12 +295,20 @@ int main()
                 if (windowopen.type == sf::Event::Closed)
                     window.close();
             }
-            ship.setPosition(366,550);
+            hearts=life;
+            lives.setString(to_string(hearts));
+            point=0;
+            ship.setPosition(366,580);
+            xaxis=366;
+            com1y=0;
+            com2y=0;
+            com3y=0;
+            com4y=0;
             bullet.setPosition(ship.getPosition());
-            comet1.setPosition(rand() % 600+50,-100);
-            comet2.setPosition(rand() % 600+50,-100);
-            comet3.setPosition(rand() % 600+50,-100);
-            comet4.setPosition(rand() % 600+50,-100);
+            comet1.setPosition(rand() % 500+50,-100);
+            comet2.setPosition(rand() % 500+50,-100);
+            comet3.setPosition(rand() % 500+50,-100);
+            comet4.setPosition(rand() % 500+50,-100);
             window.clear(sf::Color::White);
             window.draw(bgImage);
             window.draw(title);
@@ -279,6 +316,7 @@ int main()
             window.draw(diffic);
             window.draw(musicsel);
             window.draw(exit);
+            
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
             {
                 titlescreen=false;
@@ -323,18 +361,21 @@ int main()
                 diff=1;
                 titlescreen=true;
                 difficulty=false;
+                life=5;
             }
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::M))
             {
                 diff=3;
                 titlescreen=true;
                 difficulty=false;
+                life=5;
             }
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::H))
             {
                 diff=3;
                 titlescreen=true;
                 difficulty=false;
+                life=3;
             }
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
             {
@@ -391,6 +432,7 @@ int main()
                 if (windowopen.type == sf::Event::Closed)
                     window.close();
             }
+            lives.setString(to_string(hearts));
             window.clear(sf::Color::White);
             window.draw(bgImage);
             window.draw(ship);
@@ -399,6 +441,10 @@ int main()
             window.draw(comet3);
             window.draw(comet4);
             window.draw(bullet);
+            window.draw(score);
+            window.draw(points);
+            window.draw(lives);
+            window.draw(heart);
             
             //setCollision
             sf::FloatRect com1box = comet1.getGlobalBounds();
@@ -410,17 +456,26 @@ int main()
             
             //shipControl
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-                ship.move(-20, 0);
+                if (xaxis>=28)
+                {
+                    ship.move(-15, 0);
+                    xaxis-=15;
+                }
             
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-                ship.move(20, 0);
+                if (xaxis<=760)
+                {
+                    ship.move(15, 0);
+                    xaxis+=15;
+                }
             //comets
             //comet1
-            if (com1y>700)
+            if (com1y>800)
             {
                 com1y=0;
-                comet1.setPosition(rand() % 600+50,-100);
+                comet1.setPosition(rand() % 500+50,-100);
                 com1spd=(rand() % 6 + diff);
+                hearts-=1;
             }
             else
             {
@@ -429,11 +484,12 @@ int main()
             }
             
             //comet2
-            if (com2y>700)
+            if (com2y>800)
             {
                 com2y=0;
-                comet2.setPosition(rand() % 600+50,-100);
+                comet2.setPosition(rand() % 500+50,-100);
                 com2spd=(rand() % 6 + diff);
+                hearts-=1;
             }
             else
             {
@@ -442,11 +498,12 @@ int main()
             }
             
             //comet3
-            if (com3y>700)
+            if (com3y>800)
             {
                 com3y=0;
-                comet3.setPosition(rand() % 600+50,-100);
+                comet3.setPosition(rand() % 500+50,-100);
                 com3spd=(rand() % 6 + diff);
+                hearts-=1;
             }
             else
             {
@@ -455,11 +512,12 @@ int main()
             }
             
             //comet4
-            if (com4y>700)
+            if (com4y>800)
             {
                 com4y=0;
-                comet4.setPosition(rand() % 600+50,-100);
+                comet4.setPosition(rand() % 500+50,-100);
                 com4spd=(rand() % 6 + diff);
+                hearts-=1;
             }
             else
             {
@@ -482,46 +540,55 @@ int main()
             if (com1box.intersects(bulletbox))
             {
                 com1y=0;
-                comet1.setPosition(rand() % 600+50,-100);
+                comet1.setPosition(rand() % 500+50,-100);
                 com1spd=(rand() % 6 + diff);
                 bullety=0;
                 bullet.setPosition(ship.getPosition());
+                point+=100;
+                hitSound.play();
             }
             
             if (com2box.intersects(bulletbox))
             {
                 com2y=0;
-                comet2.setPosition(rand() % 600+50,-100);
+                comet2.setPosition(rand() % 500+50,-100);
                 com2spd=(rand() % 6 + diff);
                 bullety=0;
                 bullet.setPosition(ship.getPosition());
+                point+=100;
+                hitSound.play();
             }
             
             if (com3box.intersects(bulletbox))
             {
                 com3y=0;
-                comet3.setPosition(rand() % 600+50,-100);
+                comet3.setPosition(rand() % 500+50,-100);
                 com3spd=(rand() % 6 + diff);
                 bullety=0;
                 bullet.setPosition(ship.getPosition());
+                point+=100;
+                hitSound.play();
             }
             
             if (com4box.intersects(bulletbox))
             {
                 com4y=0;
-                comet4.setPosition(rand() % 600+50,-100);
+                comet4.setPosition(rand() % 500+50,-100);
                 com4spd=(rand() % 6 + diff);
                 bullety=0;
                 bullet.setPosition(ship.getPosition());
+                point+=100;
+                hitSound.play();
             }
             
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
             {
                 titlescreen=true;
                 gamerunning=false;
+                BGM.stop();
             }
             
-            //shipCollision
+            //GameOverConditions
             if (com1box.intersects(shipbox) || com2box.intersects(shipbox) || com3box.intersects(shipbox) || com4box.intersects(shipbox))
             {
                 window.draw(gameo);
@@ -529,6 +596,7 @@ int main()
                 window.draw(exp);
                 window.display();
                 BGM.stop();
+                deathSound.play();
                 while (true)
                 {
                     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
@@ -537,6 +605,24 @@ int main()
                 titlescreen=true;
                 gamerunning=false;
             }
+            if (hearts==0)
+            {
+                lives.setString(to_string(hearts));
+                window.draw(lives);
+                window.draw(gameo);
+                window.display();
+                BGM.stop();
+                deathSound.play();
+                while (true)
+                {
+                    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+                        break;
+                }
+                titlescreen=true;
+                gamerunning=false;
+            }
+            point+=1;
+            points.setString(to_string(point));
             window.display();
         }//endOfGamerunningLoop
         
