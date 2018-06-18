@@ -161,7 +161,7 @@ int main()
     
     sf::Sound hitSound;
     hitSound.setBuffer(hitBuffer);
-    hitSound.setVolume(50);
+    hitSound.setVolume(30);
     
     sf::SoundBuffer deadBuffer;
     if (!deadBuffer.loadFromFile(resourcePath() + "dead.ogg"))
@@ -169,7 +169,7 @@ int main()
     
     sf::Sound deathSound;
     deathSound.setBuffer(deadBuffer);
-    deathSound.setVolume(80);
+    deathSound.setVolume(60);
     
     sf::SoundBuffer loselifeBuffer;
     if (!loselifeBuffer.loadFromFile(resourcePath() + "loselife.ogg"))
@@ -177,7 +177,14 @@ int main()
     
     sf::Sound loselifeSound;
     loselifeSound.setBuffer(loselifeBuffer);
-    loselifeSound.setVolume(60);
+    loselifeSound.setVolume(40);
+    
+    sf::SoundBuffer gainalife;
+    if (!gainalife.loadFromFile(resourcePath() + "addlife.ogg"))
+        cout<<"addlifesound_LOAD_FAILED"<<endl;
+    
+    sf::Sound getlife;
+    getlife.setBuffer(gainalife);
     
     sf::SoundBuffer gameoverBuffer;
     if (!gameoverBuffer.loadFromFile(resourcePath() + "gameover.ogg"))
@@ -214,6 +221,11 @@ int main()
     heart.setOrigin(88,77);
     heart.setPosition(730,20);
     heart.scale(0.15f, 0.15f);
+    
+    sf::Sprite addlife;
+    addlife.setTexture(heartimage,true);
+    addlife.setOrigin(88,77);
+    addlife.scale(0.2f, 0.2f);
     
     //importGAMEOVER
     sf::Texture overimage;
@@ -301,6 +313,9 @@ int main()
     int diff(1);
     int point(0);
     int bullety(0);
+    int hearty(0);
+    int heartrand(0);
+    int heartdiff(10);
     unsigned int com1y(0);
     unsigned int com2y(0);
     unsigned int com3y(0);
@@ -323,6 +338,7 @@ int main()
     bool gamerunning(false);
     bool difficulty(false);
     bool musicselection(false);
+    bool heartdrop(false);
     
     //RUNTIME
     while (window.isOpen())
@@ -352,6 +368,9 @@ int main()
             com2y=0;
             com3y=0;
             com4y=0;
+            hearty=0;
+            heartdrop=false;
+            addlife.setPosition(rand() % 500 + 50, -200);
             bullet.setPosition(ship.getPosition());
             comet1.setPosition(rand() % 500+50,-100);
             comet2.setPosition(rand() % 500+50,-100);
@@ -417,6 +436,7 @@ int main()
                 titlescreen=true;
                 difficulty=false;
                 life=5;
+                heartdiff=7;
             }
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::M))
             {
@@ -425,6 +445,7 @@ int main()
                 titlescreen=true;
                 difficulty=false;
                 life=5;
+                heartdiff=4;
             }
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::H))
             {
@@ -433,6 +454,7 @@ int main()
                 titlescreen=true;
                 difficulty=false;
                 life=3;
+                heartdiff=2;
             }
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
             {
@@ -507,6 +529,7 @@ int main()
             window.draw(points);
             window.draw(lives);
             window.draw(heart);
+            window.draw(addlife);
             
             //setCollision
             sf::FloatRect com1box = comet1.getGlobalBounds();
@@ -515,6 +538,7 @@ int main()
             sf::FloatRect com4box = comet4.getGlobalBounds();
             sf::FloatRect bulletbox = bullet.getGlobalBounds();
             sf::FloatRect shipbox = ship.getGlobalBounds();
+            sf::FloatRect heartbox = addlife.getGlobalBounds();
             
             //Escape
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
@@ -624,7 +648,36 @@ int main()
                 bullet.move(0,-50);
             }
             
+            //randomHeartDrop
+            if (!heartdrop)
+            {
+                heartrand = rand() % 10000 + 1;
+                if (heartrand<heartdiff)
+                    heartdrop=true;
+            }
+            
+            if (heartdrop)
+            {
+                hearty+=2;
+                addlife.move(0, 2);
+                if (hearty>800)
+                {
+                    hearty=0;
+                    heartdrop=false;
+                    addlife.setPosition(rand() % 500 + 50, -200);
+                }
+            }
+            
             //checkCollision
+            if (heartbox.intersects(shipbox))
+            {
+                hearts+=1;
+                hearty=0;
+                addlife.setPosition(rand() % 500+50, -200);
+                heartdrop=false;
+                getlife.play();
+            }
+            
             if (com1box.intersects(bulletbox))
             {
                 com1y=0;
