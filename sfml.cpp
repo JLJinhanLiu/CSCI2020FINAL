@@ -161,7 +161,7 @@ int main()
     
     sf::Sound hitSound;
     hitSound.setBuffer(hitBuffer);
-    hitSound.setVolume(30);
+    hitSound.setVolume(20);
     
     sf::SoundBuffer deadBuffer;
     if (!deadBuffer.loadFromFile(resourcePath() + "dead.ogg"))
@@ -177,7 +177,7 @@ int main()
     
     sf::Sound loselifeSound;
     loselifeSound.setBuffer(loselifeBuffer);
-    loselifeSound.setVolume(40);
+    loselifeSound.setVolume(25);
     
     sf::SoundBuffer gainalife;
     if (!gainalife.loadFromFile(resourcePath() + "addlife.ogg"))
@@ -330,7 +330,7 @@ int main()
     if (!BGM.openFromFile(resourcePath() + "Stardust.ogg"))
         cout<<"bgm_LOAD_FAILED"<<endl;
     BGM.setLoop(true);
-    BGM.setVolume(60);
+    BGM.setVolume(40);
     
     //setBoolVar
     bool tutorial(true);
