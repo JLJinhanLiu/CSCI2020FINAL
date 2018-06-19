@@ -23,6 +23,13 @@ int main()
         cout<<"font_LOAD_FAILED"<<endl;
     
     //buildString
+    sf::Text howtoquit;
+    howtoquit.setFont(invasion);
+    howtoquit.setCharacterSize(20);
+    howtoquit.setFillColor(sf::Color::White);
+    howtoquit.setString("Press Space to continue...");
+    howtoquit.setPosition(250, 350);
+    
     sf::Text score;
     score.setFont(invasion);
     score.setCharacterSize(30);
@@ -48,6 +55,26 @@ int main()
     highscore.setFillColor(sf::Color::White);
     highscore.setString("HIGH SCORE: ");
     highscore.setPosition(8, 0);
+    
+    sf::Text sensitivity;
+    sensitivity.setFont(invasion);
+    sensitivity.setCharacterSize(25);
+    sensitivity.setFillColor(sf::Color::White);
+    sensitivity.setString("Use arrow keys to change sensitivity.\n          Press Esc to save.");
+    sensitivity.setPosition(130, 400);
+    
+    sf::Text manValue;
+    manValue.setFont(invasion);
+    manValue.setCharacterSize(30);
+    manValue.setFillColor(sf::Color::White);
+    manValue.setPosition(380, 500);
+    
+    sf::Text mantitle;
+    mantitle.setFont(invasion);
+    mantitle.setCharacterSize(20);
+    mantitle.setFillColor(sf::Color::White);
+    mantitle.setPosition(350, 560);
+    mantitle.setString("Press num 0 to change sensitivity.");
     
     sf::Text hiscore;
     hiscore.setFont(invasion);
@@ -310,6 +337,7 @@ int main()
     int life(5);
     int hearts;
     int xaxis(366);
+    int movespd(12);
     int diff(1);
     int point(0);
     int bullety(0);
@@ -339,6 +367,7 @@ int main()
     bool difficulty(false);
     bool musicselection(false);
     bool heartdrop(false);
+    bool manoeuvrability(false);
     
     //RUNTIME
     while (window.isOpen())
@@ -358,6 +387,7 @@ int main()
                 if (windowopen.type == sf::Event::Closed)
                     window.close();
             }
+            window.setFramerateLimit(60);
             hiscore.setString(to_string(hscore));
             hearts=life;
             lives.setString(to_string(hearts));
@@ -385,6 +415,7 @@ int main()
             window.draw(exit);
             window.draw(highscore);
             window.draw(hiscore);
+            window.draw(mantitle);
             
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
             {
@@ -411,9 +442,46 @@ int main()
                 titlescreen=false;
                 window.close();
             }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num0))
+            {
+                selectSound.play();
+                titlescreen=false;
+                manoeuvrability=true;
+            }
             window.display();
         }
         
+        while (manoeuvrability) {
+            window.setFramerateLimit(18);
+            sf::Event windowopen;
+            while (window.pollEvent(windowopen))
+            {
+                if (windowopen.type == sf::Event::Closed)
+                    window.close();
+            }
+            window.clear(sf::Color::White);
+            window.draw(bgImage);
+            window.draw(title);
+            window.draw(sensitivity);
+            manValue.setString(to_string(movespd));
+            window.draw(manValue);
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && movespd>5)
+            {
+                movespd-=1;
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && movespd<40)
+            {
+                movespd+=1;
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+            {
+                selectSound.play();
+                titlescreen=true;
+                manoeuvrability=false;
+            }
+            window.display();
+            
+        }
         while (difficulty)
         {
             sf::Event windowopen;
@@ -422,6 +490,7 @@ int main()
                 if (windowopen.type == sf::Event::Closed)
                     window.close();
             }
+            window.setFramerateLimit(18);
             window.clear(sf::Color::White);
             window.draw(bgImage);
             window.draw(title);
@@ -473,6 +542,7 @@ int main()
                 if (windowopen.type == sf::Event::Closed)
                     window.close();
             }
+            window.setFramerateLimit(18);
             window.clear(sf::Color::White);
             window.draw(bgImage);
             window.draw(title);
@@ -554,8 +624,8 @@ int main()
                 tutorial=false;
                 if (xaxis>=28)
                 {
-                    ship.move(-15, 0);
-                    xaxis-=15;
+                    ship.move(-movespd, 0);
+                    xaxis-=movespd;
                 }
             }
             
@@ -564,8 +634,8 @@ int main()
                 tutorial=false;
                 if (xaxis<=760)
                 {
-                    ship.move(15, 0);
-                    xaxis+=15;
+                    ship.move(movespd, 0);
+                    xaxis+=movespd;
                 }
             }
             //Tutorial?
@@ -728,14 +798,16 @@ int main()
                 window.draw(gameo);
                 exp.setPosition(ship.getPosition());
                 window.draw(exp);
+                window.draw(howtoquit);
                 window.display();
                 BGM.stop();
                 deathSound.play();
+                window.setFramerateLimit(18);
                 if (point>hscore)
                     hscore=point;
                 while (true)
                 {
-                    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) || sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+                    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)| sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
                         break;
                 }
                 titlescreen=true;
@@ -747,9 +819,11 @@ int main()
                 lives.setString(to_string(hearts));
                 window.draw(lives);
                 window.draw(gameo);
+                window.draw(howtoquit);
                 window.display();
                 BGM.stop();
                 gameoverSound.play();
+                window.setFramerateLimit(18);
                 if (point>hscore)
                     hscore=point;
                 while (true)
@@ -769,3 +843,4 @@ int main()
     
     return EXIT_SUCCESS;
 }
+
