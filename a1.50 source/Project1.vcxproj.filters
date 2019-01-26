@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resources\hard.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\medium.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\music.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\songs.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\start.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\title.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\diffic.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\easy.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\exit.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\heart.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\gameo.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\exp.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\exp2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\ship.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\shipBubble.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\bullet.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\ast4.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\ast1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\ast2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\ast3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\Engine.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\studioPresents.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\black.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\disclaimer.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Textures\spaceBackground.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Effects\hit.ogg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Effects\loselife.ogg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Effects\addlife.ogg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Effects\dead.ogg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Effects\select.ogg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Effects\gameover.ogg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Effects\lowHealth.ogg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Musics\Stardust.ogg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Musics\LostFuture.ogg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Musics\Spaceflight.ogg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Musics\menuMusic.ogg">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Effects\error.ogg">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Menu-Rehaul.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Miscs\invasion.ttf">
+      <Filter>Resource Files</Filter>
+    </Font>
+    <Font Include="Miscs\FuturaLight.ttf">
+      <Filter>Resource Files</Filter>
+    </Font>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="SFML Space Breakout.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Miscs\leaderboard.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+  </ItemGroup>
+</Project>
